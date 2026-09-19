@@ -56,4 +56,5 @@ def load_dataset(dataset_name: str) -> TimeSeriesDataset:
         values=values,
         frequency=inferred_frequency,
         target_columns=target_columns,
-        primary_target=config.get("primary_target"))
+        primary_target=config.get("primary_target"),
+        seasonal_period=config.get("seasonal_period"))

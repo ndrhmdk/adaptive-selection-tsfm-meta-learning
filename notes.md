@@ -16,8 +16,17 @@ project_root = next(
      if (path / "pyproject.toml").is_file() and (path / "src").is_dir()),
     None,
 )
-if project_root is None:
-    raise RuntimeError("Open this notebook from within the project directory.")
-if str(project_root) not in sys.path:
-    sys.path.insert(0, str(project_root))
+```
+
+## **No.2 `uv` Cache**
+Run these
+
+```shell
+uv cache prune
+```
+
+and 
+```shell
+# after you finished with the project
+uv cache clean
 ```

@@ -14,6 +14,8 @@ class TimeSeriesDataset:
     target_columns: list[str]
     primary_target: str | None
     
+    seasonal_period: int | None = None
+    
     @property
     def n_observations(self) -> int:
         return len(self.values)

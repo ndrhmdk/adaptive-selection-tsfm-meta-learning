@@ -15,7 +15,22 @@ dependencies = [
     "matplotlib>=3.9",
     "jupyter>=1.1",
     "ipykernel>=6.29",
+
+    # Deep Learning / tsfm
+    "torch>=2.2,<3",
+    "chronos-forecasting==2.3.2",
 ]
 
 [tool.ruff]
 line-length = 100
+
+# PyTorch CUDA ------------------------------------
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cu128", marker = "sys_platform == 'win32' or sys_platform == 'linux'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true

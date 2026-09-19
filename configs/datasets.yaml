@@ -13,6 +13,7 @@ datasets:
       - OT
     primary_target: OT
     expected_frequency: 1h
+    seasonal_period: 24
     multivariate: true
   
   Weather:
