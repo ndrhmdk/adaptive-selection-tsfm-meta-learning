@@ -1,0 +1,13 @@
+{
+    "dataset": "ETTh1",
+    "domain": "energy",
+    "n_observations": 17420,
+    "n_variates": 7,
+    "start_time": "2016-07-01 00:00:00",
+    "end_time": "2018-06-26 19:00:00",
+    "frequency": "h",
+    "missing_values": 0,
+    "missing_rate": 0.0,
+    "infinite_values": 0,
+    "constant_columns": []
+}

@@ -1,0 +1,33 @@
+experiment:
+  name: adaptive-tsfm-selection-v1
+  seed: 2026
+
+forecasting:
+  context_length: 512
+
+  prediction_lengths:
+    - 24
+    - 96
+    - 192
+
+  stride:
+    strategy: prediction_length
+
+  pilot_windows_per_configuration: 20
+
+  full_windows_per_configuration: 50
+
+evaluation:
+  primary_metric: mase
+
+  secondary_metrics:
+    - mae
+    - smape
+    - rmse
+
+meta_learning:
+  primary_model: xgboost
+  comparison_model: random_forest
+
+  validation:
+    strategy: leave_one_dataset_out

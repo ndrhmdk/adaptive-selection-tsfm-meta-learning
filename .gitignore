@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# Environment variables
+.env
+
+# Model caches
+.cache/
+huggingface/
+
+# Raw/large datasets
+data/raw/*
+!data/raw/.gitkeep
+
+# Generated results
+results/forecasts/*
+results/metrics/*
+results/features/*
+results/meta_dataset/*
+results/figures/*
+
+# Preserve folders
+!results/**/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# custom
+schedule.md
+/agents/*

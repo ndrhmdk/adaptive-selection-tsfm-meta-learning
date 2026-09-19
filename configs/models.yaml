@@ -1,0 +1,20 @@
+models:
+
+  chronos2:
+    family: tsfm
+    enabled: true
+    checkpoint: amazon/chronos-2
+
+  moirai2:
+    family: tsfm
+    enabled: true
+    checkpoint: Salesforce/moirai-2.0-R-small
+
+  timesfm3:
+    family: tsfm
+    enabled: true
+    checkpoint: google/timesfm-3.0
+
+  seasonal_naive:
+    family: statistical
+    enabled: true
