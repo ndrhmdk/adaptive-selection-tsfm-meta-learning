@@ -15,7 +15,6 @@ dependencies = [
     "matplotlib>=3.9",
     "jupyter>=1.1",
     "ipykernel>=6.29",
-
     # Deep Learning / tsfm
     "torch>=2.2,<3",
     "chronos-forecasting==2.3.2",

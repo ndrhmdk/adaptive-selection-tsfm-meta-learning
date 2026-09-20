@@ -72,3 +72,41 @@ Decision:
   1. per-series univariate forecasting;
   2. capped variable groups;
   3. both, with univariate as primary and multivariate as secondary.
+
+## 2026-09-20 — **Model-specific Python environments**
+
+During Moirai-2 integration, Uni2TS introduced dependency
+conflicts with the existing Chronos environment.
+
+Decision:
+
+Use isolated model-specific Python runtimes while keeping
+one shared repository, dataset pipeline, evaluation framework,
+and results directory.
+
+Current environments:
+
+- `.venv`
+  - shared/core environment
+  - Chronos-2
+
+- `.venv-uni2ts`
+  - Moirai-2
+  - Uni2TS
+
+- `.venv-timesfm`
+  - TimesFM 3.0
+
+This isolation prevents model-specific dependency requirements
+from affecting other TSFM implementations.
+
+All models continue to receive identical forecasting windows
+and are evaluated by the same shared metric implementation.
+
+## **TimesFM 3.0 license**
+
+TimesFM 3.0 pretrained weights are used only for
+non-commercial academic research as part of this graduation project.
+
+Checkpoint:
+`google/timesfm-3.0-pytorch`

@@ -42,3 +42,5 @@ Thumbs.db
 # custom
 schedule.md
 /agents/*
+environments/check_timesfm_environment.py
+scripts/check_timesfm_environment.py

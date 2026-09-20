@@ -1,0 +1,11 @@
+# Shared data, evaluation, plotting, and notebook dependencies for model environments.
+# Keep model-specific packages (and their PyTorch builds) in their own environments.
+numpy>=1.26
+pandas>=2.2
+scipy>=1.13
+statsmodels>=0.14
+scikit-learn>=1.5
+pyarrow>=17.0
+pyyaml>=6.0
+matplotlib>=3.9
+ipykernel>=6.29
