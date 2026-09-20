@@ -18,7 +18,7 @@ project_root = next(
 )
 ```
 
-## **No.2 `uv` Cache**
+## **No.2 - `uv` Cache**
 Run these
 
 ```shell
@@ -29,4 +29,10 @@ and
 ```shell
 # after you finished with the project
 uv cache clean
+```
+
+## **No.3 - Standardize formatting automatically**
+```shell
+uvx ruff format src scripts
+uvx ruff format src scripts --fix
 ```
