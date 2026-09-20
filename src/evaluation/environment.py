@@ -4,6 +4,11 @@ import sys
 import torch
 import importlib.metadata
 
+def safe_version(package: str) -> str | None:
+    try:
+        return (importlib.metadata.version(package))
+    except importlib.metadata.PackageNotFoundError:
+        return None
 
 def get_environment_info() -> dict:
     info = {
@@ -12,7 +17,8 @@ def get_environment_info() -> dict:
         "torch_version": torch.__version__,
         "cuda_available": torch.cuda.is_available(),
         "cuda_version": torch.version.cuda,
-        "chronos_version": importlib.metadata.version("chronos-forecasting"),}
+        "chronos_version": safe_version("chronos-forecasting"),
+        "uni2ts_version": safe_version("uni2ts")}
 
     if torch.cuda.is_available():
         info["gpu_name"] = torch.cuda.get_device_name(0)
