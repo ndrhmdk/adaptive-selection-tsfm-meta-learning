@@ -113,6 +113,9 @@ def run_pilot_benchmark(
 
     metrics_df = pd.DataFrame(metric_rows)
     forecasts_df = pd.DataFrame(forecast_rows)
+    # Keep persisted timestamp units consistent across pandas versions/environments.
+    metrics_df["cutoff_timestamp"] = metrics_df["cutoff_timestamp"].dt.as_unit("ns")
+    forecasts_df["timestamp"] = forecasts_df["timestamp"].dt.as_unit("ns")
     model_name = metrics_df["model"].iloc[0]
 
     output_dir = Path(results_dir)
