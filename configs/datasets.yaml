@@ -1,28 +1,27 @@
-datasets: 
+datasets:
   ETTh1:
     path: data/raw/ETTh/ETTh1.csv
     domain: energy
     timestamp_column: date
-    target_columns:
-      - HUFL
-      - HULL
-      - MUFL
-      - MULL
-      - LUFL
-      - LULL
-      - OT
     primary_target: OT
     expected_frequency: 1h
     seasonal_period: 24
-    multivariate: true
-  
+
   Weather:
     path: data/raw/weather/weather.csv
     domain: weather
     timestamp_column: date
     primary_target: null
     expected_frequency: 10min
-    multivariate: true
+    seasonal_period: 144
+
+  Electricity:
+    path: data/raw/electricity/electricity.csv
+    domain: energy
+    timestamp_column: date
+    primary_target: null
+    expected_frequency: 1h
+    seasonal_period: 24
 
   Traffic:
     path: data/raw/traffic/traffic.csv
@@ -30,7 +29,7 @@ datasets:
     timestamp_column: date
     primary_target: null
     expected_frequency: 1h
-    multivariate: true
+    seasonal_period: 24
 
   Exchange:
     path: data/raw/exchange/exchange_rate.csv
@@ -38,12 +37,13 @@ datasets:
     timestamp_column: date
     primary_target: null
     expected_frequency: 1d
-    multivariate: true
+    seasonal_period: 1
 
   Solar:
     path: data/raw/solar/solar.csv
     domain: renewable_energy
-    timestamp_column: date
+    timestamp_column: null
+    start_time: "2006-01-01 00:00:00"
     primary_target: null
-    expected_frequency: null
-    multivariate: true
+    expected_frequency: 10min
+    seasonal_period: 144

@@ -1,0 +1,25 @@
+targets:
+  ETTh1:
+  - OT
+  - HULL
+  - MULL
+  Weather:
+  - OT
+  - rh (%)
+  - "SWDR (W/m\uFFFD)"
+  Electricity:
+  - '146'
+  - '22'
+  - '163'
+  Traffic:
+  - T683
+  - T472
+  - T855
+  Exchange:
+  - '4'
+  - OT
+  - '0'
+  Solar:
+  - solar_125
+  - solar_115
+  - solar_27

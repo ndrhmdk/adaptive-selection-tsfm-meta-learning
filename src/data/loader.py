@@ -21,28 +21,46 @@ def load_dataset(dataset_name: str) -> TimeSeriesDataset:
     config = configs[dataset_name]
     path = PROJECT_ROOT / Path(config["path"])
     if not path.exists():
-        raise FileNotFoundError(
-            f"Dataset '{dataset_name}' was  configured but the file does not exists:\n{path}"
-        )
+        raise FileNotFoundError(f"Dataset '{dataset_name}' was  configured but the file does not exists:\n{path}")
 
     df = pd.read_csv(path)
-    timestamps_column = config["timestamp_column"]
-    if timestamps_column not in df.columns:
-        raise ValueError(f"Timestamp column '{timestamps_column}' not found in {dataset_name}.")
+    timestamp_column = config.get("timestamp_column")
 
-    df[timestamps_column] = pd.to_datetime(df[timestamps_column], errors="raise")
-    df = df.sort_values(timestamps_column)
-    if df[timestamps_column].duplicated().any():
-        duplicates = df[timestamps_column].duplicated().sum()
-        raise ValueError(f"'{dataset_name}' contains {duplicates} duplicated timestamps.")
+    if timestamp_column:
+        if timestamp_column not in df.columns:
+            raise ValueError(f"Timestamp column '{timestamp_column}' not found in {dataset_name}.")
 
-    timestamps = pd.DatetimeIndex(df[timestamps_column])
+        df[timestamp_column] = pd.to_datetime(df[timestamp_column], errors="raise")
+        df = df.sort_values(timestamp_column)
+
+        if df[timestamp_column].duplicated().any():
+            duplicates = df[timestamp_column].duplicated().sum()
+            raise ValueError(f"{dataset_name} contains {duplicates} duplicated timestamps.")
+
+        timestamps = pd.DatetimeIndex(df[timestamp_column])
+    else:
+        frequency = config.get("expected_frequency")
+        start_time = config.get("start_time")
+
+        if not frequency or not start_time:
+            raise ValueError(f"{dataset_name} requires expected_frequency and start_time when timestamp_column is null.")
+
+        timestamps = pd.date_range(
+            start=start_time,
+            periods=len(df),
+            freq=frequency)
 
     configured_targets = config.get("target_columns")
     if configured_targets:
         target_columns = configured_targets
     else:
-        target_columns = [column for column in df.columns if column != timestamps_column]
+        ignored_columns = {timestamp_column} if timestamp_column else set()
+
+        target_columns = [
+            column
+            for column in df.columns
+            if column not in ignored_columns
+            and not column.lower().startswith("unnamed")]
 
     missing_columns = [column for column in target_columns if column not in df.columns]
     if missing_columns:
@@ -61,5 +79,4 @@ def load_dataset(dataset_name: str) -> TimeSeriesDataset:
         frequency=inferred_frequency,
         target_columns=target_columns,
         primary_target=config.get("primary_target"),
-        seasonal_period=config.get("seasonal_period"),
-    )
+        seasonal_period=config.get("seasonal_period"))

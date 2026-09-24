@@ -1,0 +1,23 @@
+benchmark:
+  datasets:
+    - ETTh1
+    - Weather
+    - Electricity
+    - Traffic
+    - Exchange
+    - Solar
+
+  context_length: 512
+
+  prediction_lengths:
+    - 24
+    - 96
+    - 192
+
+  windows_per_target: 20
+
+  targets_per_dataset: 3
+
+  target_selection_seed: 2026
+
+  save_forecasts: false

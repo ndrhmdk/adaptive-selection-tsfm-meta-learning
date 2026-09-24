@@ -31,6 +31,8 @@ results/metrics/*
 results/features/*
 results/meta_dataset/*
 results/figures/*
+results/benchmark/forecasts/*
+results/benchmark/metrics/*
 
 # Preserve folders
 !results/**/.gitkeep
@@ -44,3 +46,4 @@ schedule.md
 /agents/*
 environments/check_timesfm_environment.py
 scripts/check_timesfm_environment.py
+*process*
