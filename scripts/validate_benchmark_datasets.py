@@ -20,11 +20,15 @@ TARGET_CONFIG = PROJECT_ROOT / "configs" / "benchmark_targets.yaml"
 def main():
     with open(BENCHMARK_CONFIG, "r", encoding="utf-8") as file:
         benchmark = yaml.safe_load(file)["benchmark"]
-        print(f"Successfully loaded {BOLD}{YELLOW}{BENCHMARK_CONFIG.relative_to(PROJECT_ROOT).as_posix()}")
+        print(
+            f"Successfully loaded {BOLD}{YELLOW}{BENCHMARK_CONFIG.relative_to(PROJECT_ROOT).as_posix()}"
+        )
 
     with open(TARGET_CONFIG, "r", encoding="utf-8") as file:
         targets = yaml.safe_load(file)["targets"]
-        print(f"Successfully loaded {BOLD}{YELLOW}{TARGET_CONFIG.relative_to(PROJECT_ROOT).as_posix()}")
+        print(
+            f"Successfully loaded {BOLD}{YELLOW}{TARGET_CONFIG.relative_to(PROJECT_ROOT).as_posix()}"
+        )
 
     context_length = benchmark["context_length"]
     max_horizon = max(benchmark["prediction_lengths"])
@@ -36,23 +40,27 @@ def main():
 
         dashes = "-" * 50
         print(f"----- {BOLD}{YELLOW}{dataset_name:12}{RESET}{dashes}")
-        
+
         print(f"  + Observations:    {CYAN}{dataset.n_observations}{RESET}")
         print(f"  + Variates:        {CYAN}{dataset.n_variates}{RESET}")
         print(f"  + Frequency:       {CYAN}{dataset.frequency}{RESET}")
         print(f"  + Seasonal period: {CYAN}{dataset.seasonal_period}{RESET}")
         print(f"  + Missing rate:    {CYAN}{report['missing_rate']:.4f}{RESET}")
         print(f"  + Targets:         {MAG}{targets[dataset_name]}{RESET}")
-        
+
         if dataset.n_observations < required_length:
-            raise ValueError(f"  *** {BOLD}{YELLOW}{dataset_name}{RESET} has only {BOLD}{CYAN}{dataset.n_observations}{RESET} observations. At least {BOLD}{CYAN}{required_length}{RESET} are required.")
-        
+            raise ValueError(
+                f"  *** {BOLD}{YELLOW}{dataset_name}{RESET} has only {BOLD}{CYAN}{dataset.n_observations}{RESET} observations. At least {BOLD}{CYAN}{required_length}{RESET} are required."
+            )
+
         for target in targets[dataset_name]:
             if target not in dataset.values.columns:
-                raise ValueError(f"Target {BOLD}{MAG}{target}{RESET} does not exist in {BOLD}{YELLOW}{dataset_name}")
-            
+                raise ValueError(
+                    f"Target {BOLD}{MAG}{target}{RESET} does not exist in {BOLD}{YELLOW}{dataset_name}"
+                )
+
         print()
-        
+
     print("All benchmark datasets passed validation.")
 
 

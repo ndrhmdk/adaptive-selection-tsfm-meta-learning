@@ -1,6 +1,7 @@
 import numpy as np
 import torch
-from timesfm3 import TimesFM3Evaluator, ModelConfig
+from timesfm3 import ModelConfig, TimesFM3Evaluator
+
 from src.models.base import BaseForecaster, ForecastResult
 
 
@@ -31,7 +32,7 @@ class TimesFM3Forecaster(BaseForecaster):
             raise ValueError("hisotry cannot be empty")
         if not np.isfinite(history).all():
             raise ValueError("TimesFM history currently rrequires finite values.")
-        context_length = history.shape[0]
+        # context_length = history.shape[0]
         n_variates = history.shape[1]
 
         """

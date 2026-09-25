@@ -1,7 +1,7 @@
 import numpy as np
 import torch
-
 from chronos import Chronos2Pipeline
+
 from src.models.base import BaseForecaster, ForecastResult
 
 

@@ -1,4 +1,5 @@
 from pathlib import Path
+
 import pandas as pd
 
 from src.data.config import PROJECT_ROOT, load_dataset_config
@@ -21,7 +22,9 @@ def load_dataset(dataset_name: str) -> TimeSeriesDataset:
     config = configs[dataset_name]
     path = PROJECT_ROOT / Path(config["path"])
     if not path.exists():
-        raise FileNotFoundError(f"Dataset '{dataset_name}' was  configured but the file does not exists:\n{path}")
+        raise FileNotFoundError(
+            f"Dataset '{dataset_name}' was  configured but the file does not exists:\n{path}"
+        )
 
     df = pd.read_csv(path)
     timestamp_column = config.get("timestamp_column")
@@ -43,12 +46,11 @@ def load_dataset(dataset_name: str) -> TimeSeriesDataset:
         start_time = config.get("start_time")
 
         if not frequency or not start_time:
-            raise ValueError(f"{dataset_name} requires expected_frequency and start_time when timestamp_column is null.")
+            raise ValueError(
+                f"{dataset_name} requires expected_frequency and start_time when timestamp_column is null."
+            )
 
-        timestamps = pd.date_range(
-            start=start_time,
-            periods=len(df),
-            freq=frequency)
+        timestamps = pd.date_range(start=start_time, periods=len(df), freq=frequency)
 
     configured_targets = config.get("target_columns")
     if configured_targets:
@@ -59,8 +61,8 @@ def load_dataset(dataset_name: str) -> TimeSeriesDataset:
         target_columns = [
             column
             for column in df.columns
-            if column not in ignored_columns
-            and not column.lower().startswith("unnamed")]
+            if column not in ignored_columns and not column.lower().startswith("unnamed")
+        ]
 
     missing_columns = [column for column in target_columns if column not in df.columns]
     if missing_columns:
@@ -79,4 +81,5 @@ def load_dataset(dataset_name: str) -> TimeSeriesDataset:
         frequency=inferred_frequency,
         target_columns=target_columns,
         primary_target=config.get("primary_target"),
-        seasonal_period=config.get("seasonal_period"))
+        seasonal_period=config.get("seasonal_period"),
+    )

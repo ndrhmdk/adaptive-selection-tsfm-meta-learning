@@ -7,11 +7,18 @@ from src.data.loader import load_dataset
 from src.data.windows import make_rolling_windows
 from src.features.extractor import extract_window_features
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
-TSFM_MODELS = ["chronos2", "moirai2", "timesfm3",]
-PREDICTION_LENGTHS = [24, 96, 192,]
+TSFM_MODELS = [
+    "chronos2",
+    "moirai2",
+    "timesfm3",
+]
+PREDICTION_LENGTHS = [
+    24,
+    96,
+    192,
+]
 
 
 def build_features() -> pd.DataFrame:
@@ -24,7 +31,8 @@ def build_features() -> pd.DataFrame:
             prediction_length=prediction_length,
             n_windows=20,
             stride=prediction_length,
-            columns=["OT"])
+            columns=["OT"],
+        )
         for window in windows:
             features = extract_window_features(
                 window=window,
@@ -105,9 +113,8 @@ def build_meta_dataset() -> pd.DataFrame:
         order[:, 1:2],
         axis=1,
     ).ravel()
-    meta["winner_margin"] = second_best - bes
-    meta["winner_margin_relative"] = (
-        meta["winner_margin"] / np.maximum(best, 1e-8))
+    meta["winner_margin"] = second_best - best
+    meta["winner_margin_relative"] = meta["winner_margin"] / np.maximum(best, 1e-8)
 
     return meta
 

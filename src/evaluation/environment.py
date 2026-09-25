@@ -1,8 +1,8 @@
+import importlib.metadata
 import platform
 import sys
 
 import torch
-import importlib.metadata
 
 
 def safe_version(package: str) -> str | None:

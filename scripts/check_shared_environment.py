@@ -3,10 +3,10 @@
 import argparse
 import gc
 import importlib
-from importlib.metadata import version
 import io
-from pathlib import Path
 import sys
+from importlib.metadata import version
+from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -18,9 +18,17 @@ def main():
     args = parser.parse_args()
     print(f"Python: {sys.executable}", flush=True)
     for module in (
-        "chronos", "uni2ts.model.moirai2", "timesfm3", "timesfm",
-        "datasets", "statsmodels.api", "ipykernel", "src.features.extractor",
-        "src.models.chronos", "src.models.moirai", "src.models.timesfm",
+        "chronos",
+        "uni2ts.model.moirai2",
+        "timesfm3",
+        "timesfm",
+        "datasets",
+        "statsmodels.api",
+        "ipykernel",
+        "src.features.extractor",
+        "src.models.chronos",
+        "src.models.moirai",
+        "src.models.timesfm",
     ):
         importlib.import_module(module)
         print(f"OK: {module}", flush=True)
@@ -29,11 +37,12 @@ def main():
     import pandas as pd
     import shap
     import torch
+    from matplotlib.backends.backend_agg import FigureCanvasAgg
+    from matplotlib.figure import Figure
     from sklearn.datasets import make_classification
     from sklearn.ensemble import RandomForestClassifier
     from xgboost import XGBClassifier
-    from matplotlib.figure import Figure
-    from matplotlib.backends.backend_agg import FigureCanvasAgg
+
     from src.data.loader import load_dataset
     from src.data.windows import make_last_window
     from src.evaluation.metrics import evaluate_forecast
@@ -42,8 +51,14 @@ def main():
         print(f"{package}: {version(package)}", flush=True)
     print(f"CUDA available: {torch.cuda.is_available()}", flush=True)
     # Synthetic data only verifies future router libraries, not router quality.
-    x, y = make_classification(n_samples=60, n_features=6, n_informative=4,
-                               n_classes=3, n_clusters_per_class=1, random_state=42)
+    x, y = make_classification(
+        n_samples=60,
+        n_features=6,
+        n_informative=4,
+        n_classes=3,
+        n_clusters_per_class=1,
+        random_state=42,
+    )
     for cls in (RandomForestClassifier, XGBClassifier):
         model = cls(n_estimators=5, max_depth=3, random_state=42, n_jobs=1).fit(x, y)
         assert model.predict(x[:3]).shape == (3,)
@@ -54,8 +69,9 @@ def main():
 
     dataset = load_dataset("ETTh1")
     window = make_last_window(dataset, context_length=512, prediction_length=24)
-    metrics = evaluate_forecast(window.target, window.target, window.history,
-                                dataset.seasonal_period)
+    metrics = evaluate_forecast(
+        window.target, window.target, window.history, dataset.seasonal_period
+    )
     assert all(np.isfinite(value) and value == 0 for value in metrics.values())
     buffer = io.BytesIO()
     dataset.values.head().to_parquet(buffer, index=False)

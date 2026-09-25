@@ -7,7 +7,6 @@ from src.data.loader import load_dataset
 from src.evaluation.benchmark import run_dataset_benchmark
 from src.models.base import BaseForecaster
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 BENCHMARK_CONFIG = PROJECT_ROOT / "configs" / "benchmark.yaml"
 TARGET_CONFIG = PROJECT_ROOT / "configs" / "benchmark_targets.yaml"
@@ -36,13 +35,9 @@ def create_forecaster(
         from src.models.baselines import SeasonalNaiveForecaster
 
         if seasonal_period is None:
-            raise ValueError(
-                "seasonal_period is required for Seasonal Naive."
-            )
+            raise ValueError("seasonal_period is required for Seasonal Naive.")
 
-        return SeasonalNaiveForecaster(
-            seasonal_period=seasonal_period
-        )
+        return SeasonalNaiveForecaster(seasonal_period=seasonal_period)
 
     raise ValueError(f"Unknown model: {model_name}")
 
@@ -98,9 +93,7 @@ def main():
         datasets = benchmark["datasets"]
     else:
         if args.dataset not in benchmark["datasets"]:
-            raise ValueError(
-                f"{args.dataset} is not part of the benchmark."
-            )
+            raise ValueError(f"{args.dataset} is not part of the benchmark.")
 
         datasets = [args.dataset]
 

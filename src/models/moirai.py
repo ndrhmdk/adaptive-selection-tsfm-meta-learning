@@ -1,8 +1,8 @@
 import numpy as np
 import torch
-
 from uni2ts.model.moirai2 import Moirai2Forecast, Moirai2Module
 from uni2ts.transform.imputation import CausalMeanImputation
+
 from src.models.base import BaseForecaster, ForecastResult
 
 
